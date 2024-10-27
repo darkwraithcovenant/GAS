@@ -1,7 +1,7 @@
 // Copyright DWC Industries
 
 
-#include "AuraCharacterBase.h"
+#include "Character/AuraCharacterBase.h"
 
 
 AAuraCharacterBase::AAuraCharacterBase()
