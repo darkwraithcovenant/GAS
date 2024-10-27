@@ -1,7 +1,7 @@
 // Copyright DWC Industries
 
 #pragma once
-
+ 
 #include "CoreMinimal.h"
 #include "Character/AuraCharacterBase.h"
 #include "AuraEnemy.generated.h"
