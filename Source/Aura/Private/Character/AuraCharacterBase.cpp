@@ -8,6 +8,8 @@ AAuraCharacterBase::AAuraCharacterBase()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
+	Weapon = CreateDefaultSubobject<USkeletalMeshComponent>("Weapon");
+
 }
 
 void AAuraCharacterBase::BeginPlay()
