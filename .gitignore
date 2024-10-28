@@ -3,6 +3,7 @@ DerivedDataCache
 Intermediate
 Saved
 Build
+.DS_Store
 .vscode
 .vs
 *.VC.db
