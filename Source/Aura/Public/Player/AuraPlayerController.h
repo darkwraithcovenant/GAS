@@ -21,6 +21,7 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
+	virtual void 
 private:
 	//UPROPERTY() - This is a macro that:
 	//Makes the property visible to Unreal's reflection system
