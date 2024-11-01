@@ -4,6 +4,7 @@
 #include "Player/AuraPlayerController.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "Interaction/EnemyInterface.h"
 
 AAuraPlayerController::AAuraPlayerController()
 {
@@ -11,6 +12,61 @@ AAuraPlayerController::AAuraPlayerController()
 	//replicated entity 
 	bReplicates = true;
 }
+
+void AAuraPlayerController::PlayerTick(float DeltaTime)
+{
+	Super::PlayerTick(DeltaTime);
+
+	CursorTrace();
+}
+//This code is performing a trace (raycast) under the cursor to detect objects. Let's break it down and fix/improve it:
+void AAuraPlayerController::CursorTrace()
+{
+	// Create a struct to store hit result
+	FHitResult CursorHit;
+	// Perform the trace under cursor
+	GetHitResultUnderCursor(
+		ECC_Visibility, // Trace channel (visibility means it traces visible objects)
+		false,   // bTraceComplex (simple collision instead of complex)
+		CursorHit);  // Out parameter that stores what we hit
+	;
+	// If we didn't hit anything, return
+	if (!CursorHit.bBlockingHit) return;
+	// Store current actor before updating
+	LastActor = ThisActor;	
+	// Try to get the interface from hit actor
+	ThisActor = CursorHit.GetActor();
+
+	/**
+	 * Linetrace from cursor several scenarios:
+	 * A. LastActor is null && ThisActor ia Null
+	 *	- Do Nothing
+	 * B. LastActor is null && ThisActor is valid
+	 *	- Highlight ThisActor
+	 * C. LastActor is valid && ThisActor is null
+	 *	- UnHighlight LastActor
+	 * D. Both actors valid, but LastActor != ThisActor
+	 *	- Unhighlight Last Actor and Highlight This Actor
+	 * E. Both actors valid, LastActor = ThisActor
+	 *	- Do Nothing
+	 */
+
+	if (ThisActor != LastActor)
+	{
+		if (LastActor != nullptr)
+		{
+			LastActor->UnHighlightActor();
+		}
+ 
+		if (ThisActor != nullptr)
+		{
+			ThisActor->HighlightActor();
+		}
+	}
+
+}	
+
+
 
 void AAuraPlayerController::BeginPlay()
 {
@@ -63,3 +119,4 @@ void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 		ControlledPawn->AddMovementInput(RightDirection, InputAxisVector.X);
 	}
 }
+

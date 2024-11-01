@@ -25,13 +25,15 @@ class UEnemyInterface : public UInterface
 class AURA_API IEnemyInterface
 {
 	//GENERATED_BODY():
-
 	//Unreal macro that generates necessary boilerplate code
 	//Required for Unreal's reflection sys
 	GENERATED_BODY()
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
+	//virtual means these functions can be overridden
+	//= 0 makes them pure virtual (must be implemented by derived classes)
+	//These functions will handle highlighting/unhighlighting enemies
 	virtual void HighlightActor() = 0;
 	virtual void UnHighlightActor() = 0;
 

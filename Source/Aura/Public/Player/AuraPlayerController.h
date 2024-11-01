@@ -8,6 +8,7 @@
 class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
+class IEnemyInterface;
 /**
  * 
  */
@@ -16,8 +17,8 @@ class AURA_API AAuraPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 public:
-	
 	AAuraPlayerController();
+	virtual void PlayerTick(float DeltaTime) override;
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
@@ -48,4 +49,10 @@ private:
 	//& means it's passed by reference (to avoid copying the whole object)
 	//InputActionValue - This is just the parameter name
 	void Move(const FInputActionValue& InputActionValue);
+
+	void CursorTrace();
+	TScriptInterface<IEnemyInterface> LastActor;
+	TScriptInterface<IEnemyInterface> ThisActor;
+
+
 };
